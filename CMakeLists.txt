@@ -120,6 +120,16 @@ if(RESTING_RIGID_BODIES_ENABLE_INVERSE_DESIGN)
 
   # Apps for inverse design (now under src/inverse_design)
   add_executable(convex_dice apps/main_convex_dice.cpp)
+  # Paste inside the RESTING_RIGID_BODIES_ENABLE_INVERSE_DESIGN block,
+  # after add_executable(convex_dice ...). Do not add this to concave_dice.
+  #
+  # Configure the repo with Polyscope OFF. Stock convex_dice forces
+  # RESTING_RIGID_BODIES_USE_POLYSCOPE and will not build headless.
+
+  add_executable(convex_dice_headless apps/main_convex_dice_headless.cpp)
+  target_link_libraries(convex_dice_headless PRIVATE resting_rigid_bodies::inverse taywee::args)
+  target_compile_definitions(convex_dice_headless PRIVATE RESTING_RIGID_BODIES_ENABLE_INVERSE_DESIGN)
+  set_property(TARGET convex_dice_headless PROPERTY CXX_STANDARD 20)
   target_link_libraries(convex_dice PRIVATE resting_rigid_bodies::inverse taywee::args)
   target_compile_definitions(convex_dice PRIVATE RESTING_RIGID_BODIES_USE_POLYSCOPE)
   target_compile_definitions(convex_dice PRIVATE RESTING_RIGID_BODIES_ENABLE_INVERSE_DESIGN)
